@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "334233025333",
+    "project_id": "eepy-technologies",
+    "storage_bucket": "eepy-technologies.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334233025333:android:9cb413313a74f15f822a7c",
+        "android_client_info": {
+          "package_name": "uk.eepytechnologies.gapper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "334233025333-40tll98fr3b1lfnobk61rs799ntcgjb6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBasC11g510jLBBqZwgf3wmbAprloD_bsM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "334233025333-40tll98fr3b1lfnobk61rs799ntcgjb6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334233025333:android:e3ae38cfdb4d3408822a7c",
+        "android_client_info": {
+          "package_name": "uk.eepytechnologies.gapper.gapper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "334233025333-40tll98fr3b1lfnobk61rs799ntcgjb6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBasC11g510jLBBqZwgf3wmbAprloD_bsM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "334233025333-40tll98fr3b1lfnobk61rs799ntcgjb6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
