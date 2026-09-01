@@ -5,11 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
+import 'package:gapper/pages/gemini_key.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 
 var HTTP_CLIENT = HttpClient();
+// ASk for API key on first launch
+late final AppLifecycleListener LIFECYCLE;
+final GlobalKey<NavigatorState> NAVKEY = GlobalKey<NavigatorState>();
 
 Future<UserCredential> signInWithGoogle() async {
   final GoogleSignInAccount? googleUser = await GoogleSignIn.instance.authenticate();
@@ -60,31 +64,70 @@ Future<void> main() async {
 }
 
 class App extends StatefulWidget {
- final String? api_key;
+  final String? api_key;
 
- App({required this.api_key});
+  App({required this.api_key});
 
 
- @override
- State<App> createState() => _App(
-     need_gemini_key: api_key == null
- );
+  @override
+  State<App> createState() => _App();
 
 }
 
+Future<void> askForGeminiKey() async {
+  if (NAVKEY.currentState != null) {
+    await Future.delayed(const Duration(seconds: 1));
+    NAVKEY.currentState!.push(
+        MaterialPageRoute(builder: (context) => GeminiKeyPage())
+    );
+  }
+}
+
 class _App extends State<App> {
-  final bool need_gemini_key;
-  _App({required this.need_gemini_key});
+  // final bool need_gemini_key;
+  // _App({required this.need_gemini_key});
+
+  /// Very important for not having to push the route every new page in flutter
+
+  _App() {
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    LIFECYCLE= AppLifecycleListener(
+        onResume: (() async {
+          await askForGeminiKey();
+        })
+    );
+  }
+
+  @override
+  void dispose() {
+    LIFECYCLE.dispose();
+    super.dispose();
+  }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData.dark(),
-      home: need_gemini_key ? const StartPage(title: 'Need Gemini Key') : const StartPage(title: '?????')
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await askForGeminiKey();
+    });
+
+
+    return GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            navigatorKey: NAVKEY,
+            title: 'Flutter Demo',
+            theme: ThemeData.dark(),
+            home: const StartPage(title: 'asdasdds')
+        )
     );
   }
+
 }
 
 class StartPage extends StatefulWidget {
