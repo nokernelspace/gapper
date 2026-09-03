@@ -8,10 +8,9 @@ class AppState {
   // ASk for API key on first launch
   static late final AppLifecycleListener LIFECYCLE;
   static final GlobalKey<NavigatorState> NAVKEY = GlobalKey<NavigatorState>();
-
 }
 
-class Keys {
+class ShouldBeSecureKeys {
   static late final String? GEMINI_API_KEY;
 }
 

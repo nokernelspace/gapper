@@ -13,7 +13,7 @@ class SetupPage extends StatefulWidget {
 
 
   static bool needs_setup() {
-    return (GEMINI_ENABLED && Keys.GEMINI_API_KEY == null) || (!OFFLINE);
+    return (GEMINI_ENABLED && ShouldBeSecureKeys.GEMINI_API_KEY == null) || (!OFFLINE);
   }
 }
 
@@ -43,7 +43,7 @@ class _SetupPage extends State<SetupPage>
     /// Calculate how many setup screens we need
     int total = 0;
 
-    if (GEMINI_ENABLED && Keys.GEMINI_API_KEY == null) {
+    if (GEMINI_ENABLED && ShouldBeSecureKeys.GEMINI_API_KEY == null) {
       total++;
       setup_pages.add(GeminiKeyFrame());
     }

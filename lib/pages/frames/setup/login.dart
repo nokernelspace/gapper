@@ -29,8 +29,17 @@ class LoginPage extends StatefulWidget {
   LoginPage(this.loading, {super.key});
 
 
-  /// Networking stuff
+  @override
+  State<LoginPage> createState() => _LoginPage(this.loading);
+}
+
+class _LoginPage extends State<LoginPage>
+{
   final FirebaseAuth auth = FirebaseAuth.instance;
+  ValueNotifier<bool> loading;
+  late BuildContext top_context;
+  _LoginPage(this.loading);
+
 
   Future<User?> signUp(String email, String password) async {
     try {
@@ -43,6 +52,7 @@ class LoginPage extends StatefulWidget {
       return creds.user;
     } on FirebaseAuthException catch (e) {
       print("Sign up error: ${e.message}");
+      showSnackBar(top_context, e.message!);
       return null;
     } on Exception catch (e) {
       print("Exception ${e.toString()}");
@@ -61,18 +71,14 @@ class LoginPage extends StatefulWidget {
       return creds.user;
     } on FirebaseAuthException catch (e) {
       print("Sign in error: ${e.message}");
+      showSnackBar(top_context, e.message!);
       return null;
     } on Exception catch (e) {
       print("Exception ${e.toString()}");
     }
   }
 
-  @override
-  State<LoginPage> createState() => _LoginPage();
-}
 
-class _LoginPage extends State<LoginPage>
-{
 
   //   with SingleTickerProviderStateMixin {
   // late Animation<double> animation;
@@ -101,13 +107,16 @@ class _LoginPage extends State<LoginPage>
 
   final login_form = GlobalKey<FormState>();
   final create_form = GlobalKey<FormState>();
-  final email_controller = TextEditingController();
+  final login_email_controller = TextEditingController();
+  final create_email_controller = TextEditingController();
   final RegExp email_regex = RegExp(
       r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'
   );
+  final String valid_passwords = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#^&*()_+=-[]\\/";
 
   @override
   Widget build(BuildContext ctx) {
+    this.top_context = ctx;
     return Scaffold(
       body: SingleChildScrollView(
           child: Padding(
@@ -122,7 +131,7 @@ class _LoginPage extends State<LoginPage>
                       child :Column(children: [
                         const Text("Login", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),),
                         TextFormField(
-                            controller: email_controller,
+                            controller: login_email_controller,
                             keyboardType: TextInputType.emailAddress,
                             decoration: const InputDecoration(
                                 label: const Text("email")
@@ -155,7 +164,7 @@ class _LoginPage extends State<LoginPage>
                       child :Column(children: [
                         const Text("Create a New Account", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),),
                         TextFormField(
-                            controller: email_controller,
+                            controller: create_email_controller,
                             keyboardType: TextInputType.emailAddress,
                             decoration: const InputDecoration(
                                 label: const Text("email")
@@ -176,7 +185,10 @@ class _LoginPage extends State<LoginPage>
                             obscureText: true,
                             decoration: const InputDecoration(
                                 label: const Text("password")
-                            )
+                            ),
+                            validator: (value) {
+
+                            },
                         ),
 
                         TextFormField(
@@ -201,6 +213,9 @@ class _LoginPage extends State<LoginPage>
             for (var field in login_form.currentState!.fields) {
               login_fields.add(field.value);
             }
+            for (var field in create_form.currentState!.fields) {
+              create_fields.add(field.value);
+            }
 
             /// If the user has not interacted with the login form assume that they are creating a new account
             /// This loop is mainly to check if the user is trying to log-in
@@ -214,16 +229,23 @@ class _LoginPage extends State<LoginPage>
 
 
             if (trying_login) {
-              showSnackBar(ctx, "Logging in...");
-
-
               String email = login_fields[0];
               String password = login_fields[1];
-              User? user = await widget.signIn(email, password);
+              User? user = await signIn(email, password);
               print(user);
             }
             else {
-              showSnackBar(ctx, "Creating new account...");
+              String email = create_fields[0];
+              String password = create_fields[1];
+              String confirm_password = create_fields[2];
+              if (password != confirm_password) {
+                /// TODO: don't use a snackbar for this, use validate:
+                showSnackBar(ctx, "Passwords don't match");
+                return;
+              }
+
+              User? user = await signUp(email, password);
+              print(user);
             }
 
             //setState(() {
