@@ -34,13 +34,21 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+
+  # FIREBASEEEEEEEEEE
   firebase_auth: ^6.6.1
   firebase_core: ^4.14.0
-  google_sign_in: ^7.2.0
-  flutter_secure_storage: ^10.0.0
-  shared_preferences: ^2.5.5
-  path_provider: ^2.1.6
-  url_launcher: ^6.3.2
+
+  google_sign_in: ^7.2.0 # Requires GMS (Android only)
+
+  # Storage packages
+  flutter_secure_storage: ^10.0.0 # Store stuff in device crypto chain chip
+  shared_preferences: ^2.5.5      # Simple KV store for settings
+  path_provider: ^2.1.6           # application paths (Cross-platform)
+
+  url_launcher: ^6.3.2            # Cross-platform URL launcher
+
+  smooth_page_indicator: ^1.2.0   # For the little dots for PageViews
 
 dev_dependencies:
   flutter_test:

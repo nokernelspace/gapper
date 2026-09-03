@@ -3,6 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+class GeminiKeyFrame extends StatelessWidget {
+  @override
+  Widget build(BuildContext ctx) {
+
+    return PopScope(
+        canPop: false,
+        child: GeminiKeyPage()
+    );
+  }
+
+}
+
 
 class GeminiKeyPage extends StatelessWidget {
   @override
