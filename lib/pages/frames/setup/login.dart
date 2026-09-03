@@ -191,7 +191,7 @@ class _LoginPage extends State<LoginPage>
           )
       ),
       floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
+          onPressed: () async {
 
             bool trying_login = false;
             List<String> login_fields = List.empty(growable: true);
@@ -219,7 +219,8 @@ class _LoginPage extends State<LoginPage>
 
               String email = login_fields[0];
               String password = login_fields[1];
-              widget.signIn(email, password);
+              User? user = await widget.signIn(email, password);
+              print(user);
             }
             else {
               showSnackBar(ctx, "Creating new account...");
