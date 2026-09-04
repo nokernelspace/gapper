@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Mood {
   DateTime time = DateTime.now();
   List<String> notes = List.from([]);   // Equivalent to List.empty(growable: true)
@@ -30,8 +32,15 @@ enum People {
 
   /// NOTE: the list
   dynamic toJson() => [this.name];
-
   static People fromJson(List<String> people) => People.values.byName(people.first);
+
+  static List<DropdownMenuEntry<People>> entries = (){
+    List<DropdownMenuEntry<People>> out  =  List.empty(growable: true);
+    for (var v in People.values) {
+      out.add(DropdownMenuEntry(value: v, label: v.name));
+    }
+    return out;
+  }();
 }
 
 class Modes {

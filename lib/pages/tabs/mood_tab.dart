@@ -7,6 +7,7 @@ class MoodTab extends StatefulWidget {
   late _MoodTab state;
 
   MoodTab({super.key});
+
   /// State
   @override
   // ignore: no_logic_in_create_state
@@ -17,8 +18,7 @@ class MoodTab extends StatefulWidget {
   }
 }
 
-class _MoodTab extends State<MoodTab>
-with AutomaticKeepAliveClientMixin {
+class _MoodTab extends State<MoodTab> with AutomaticKeepAliveClientMixin {
   Mood current_mood = Mood();
 
   @override
@@ -36,36 +36,81 @@ with AutomaticKeepAliveClientMixin {
             //crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               /// Modes
-              Text("Modes", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24)),
+              Text(
+                "Modes",
+                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
+              ),
 
               Padding(
-                padding: EdgeInsetsGeometry.fromLTRB(
-                  75.0,
-                  0.0,
-                  75.0,
-                  0.0
+                padding: EdgeInsetsGeometry.fromLTRB(75.0, 0.0, 75.0, 0.0),
+                child: Column(
+                  children: [
+                    MoodToggle(
+                      current_mood.modes.learning,
+                      label: const Text(" Learning"),
+                    ),
+                    MoodToggle(
+                      current_mood.modes.physical,
+                      label: const Text(" Physical"),
+                    ),
+                    MoodToggle(
+                      current_mood.modes.relax,
+                      label: const Text("   Relax  "),
+                    ),
+                    MoodToggle(
+                      current_mood.modes.working,
+                      label: const Text(" Working"),
+                    ),
+                    SizedBox(height: 10),
+                    DropdownMenu<People>(
+                      requestFocusOnTap: true,
+                      label: const Text("People"),
+                      initialSelection: People.I,
+                      onSelected: (People? who) {
+                        if (who != null)  {
+                          current_mood.people = who;
+                        }
+                      },
+                      dropdownMenuEntries: People.entries,
+                    )
+                  ],
                 ),
-                child:Column(children: [
-              MoodToggle(current_mood.modes.learning, label: const Text(" Learning")),
-              MoodToggle(current_mood.modes.physical, label: const Text(" Physical")),
-              MoodToggle(current_mood.modes.relax,    label: const Text("   Relax  ")),
-              MoodToggle(current_mood.modes.working,  label: const Text(" Working")),
-
-              ],)),
+              ),
               SizedBox(height: 16),
 
               /// Happy
-              Text("Happy", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24)),
+              Text(
+                "Happy",
+                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
+              ),
               MoodSlider(current_mood.happy.joy, label: const Text("Joy")),
-              MoodSlider(current_mood.happy.confidence, label: const Text("Confidence")),
-              MoodSlider(current_mood.happy.determination, label: const Text("Determination")),
-              MoodSlider(current_mood.happy.fufillment, label: const Text("Fufillment")),
+              MoodSlider(
+                current_mood.happy.confidence,
+                label: const Text("Confidence"),
+              ),
+              MoodSlider(
+                current_mood.happy.determination,
+                label: const Text("Determination"),
+              ),
+              MoodSlider(
+                current_mood.happy.fufillment,
+                label: const Text("Fufillment"),
+              ),
               SizedBox(height: 16),
 
               /// Sad
-              Text("Sad", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24)),
-              MoodSlider(current_mood.sad.disgust, label: const Text("Disgust")),
-              MoodSlider(current_mood.sad.dissapointment, label: const Text("Dissapointment")),
+              Text(
+                "Sad",
+                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
+              ),
+              MoodSlider(
+                current_mood.sad.disgust,
+                label: const Text("Disgust"),
+              ),
+              MoodSlider(
+                current_mood.sad.dissapointment,
+                label: const Text("Dissapointment"),
+              ),
               MoodSlider(current_mood.sad.stress, label: const Text("Stress")),
               MoodSlider(current_mood.sad.worry, label: const Text("Worry")),
               SizedBox(height: 16),
