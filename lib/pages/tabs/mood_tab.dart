@@ -9,6 +9,7 @@ class MoodTab extends StatefulWidget {
   MoodTab({super.key});
   /// State
   @override
+  // ignore: no_logic_in_create_state
   State<MoodTab> createState() {
     var state = _MoodTab();
     this.state = state;

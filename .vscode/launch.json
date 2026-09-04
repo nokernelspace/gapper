@@ -4,13 +4,44 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
         {
             "name": "Android Emulator (Debug)",
             "request": "launch",
             "type": "dart",
             "program": "lib/main.dart",
             "deviceId": "emulator-5554"
+        },
+        {
+            "name": "iOS Simulator (Debug)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "deviceId": "767FBF41-99F5-47AC-AFAC-5CA9E74C46C1",
+        },
+        {
+            "name": "iPhone (Debug)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "deviceId": "00008110-001830DE0C52801E",
+        },
+        {
+            "name": "Pixel Fold (Debug)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "deviceId": "37231FDHS000F8",
+        },
+
+
+
+        {
+            "name": "Pixel Fold (Release)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "deviceId": "37231FDHS000F8",
+            "flutterMode": "release"
         },
         {
             "name": "Android Emulator (Release)",
@@ -21,26 +52,12 @@
             "flutterMode": "release"
         },
         {
-            "name": "iPhone (Debug)",
-            "request": "launch",
-            "type": "dart",
-            "program": "lib/main.dart",
-            "deviceId": "00008110-001830DE0C52801E",
-        },
-        {
             "name": "iPhone (Release)",
             "request": "launch",
             "type": "dart",
             "program": "lib/main.dart",
             "deviceId": "00008110-001830DE0C52801E",
             "flutterMode": "release"
-        },
-        {
-            "name": "iOS Simulator (Debug)",
-            "request": "launch",
-            "type": "dart",
-            "program": "lib/main.dart",
-            "deviceId": "767FBF41-99F5-47AC-AFAC-5CA9E74C46C1",
         },
         {
             "name": "iOS Simulator (Release)",
