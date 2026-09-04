@@ -4,6 +4,7 @@ import 'package:gapper/widgets/mood_toggle.dart';
 import 'package:gapper/widgets/mood_slider.dart';
 
 class MoodTab extends StatefulWidget {
+  MoodTab({super.key})
   /// State
   Mood current_mood = Mood();
   @override
