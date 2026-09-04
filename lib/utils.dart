@@ -41,37 +41,3 @@ String sanitizeFilename(String name) {
   trimmed.replaceAll(".", "-");
   return trimmed;
 }
-class Toast extends StatelessWidget {
-  Toast({super.key});
-
-  @override
-  Widget build(BuildContext ctx) {
-    return Positioned(
-      left: 16,
-      right: 16,
-      bottom: 16,
-      child: Material(
-        elevation: 6,
-        borderRadius: BorderRadius.circular(4),
-        color: Colors.grey[900],
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Showing directly over the FAB!',
-                style: TextStyle(color: Colors.white),
-              ),
-              TextButton(
-                onPressed: () {
-                },
-                child: const Text('DISMISS'),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
