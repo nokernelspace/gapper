@@ -10,10 +10,8 @@ class App extends StatefulWidget {
 
   App({required this.api_key});
 
-
   @override
   State<App> createState() => _App();
-
 }
 
 class _App extends State<App> {
@@ -66,6 +64,7 @@ class _App extends State<App> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (SetupPage.needs_setup() && !setup_one_shot) {
         /// In release mode make the user wait so they can explore the app on first launch
@@ -93,7 +92,6 @@ class _App extends State<App> {
             navigatorKey: AppState.NAVKEY,
             title: 'Flutter Demo',
             theme: ThemeData.dark(),
-            // home: const StartPage(title: 'asdasdds')
 
             initialRoute: '/',
             routes: {

@@ -52,7 +52,7 @@ class _LoginPage extends State<LoginPage>
       return creds.user;
     } on FirebaseAuthException catch (e) {
       print("Sign up error: ${e.message}");
-      showSnackBar(top_context, e.message!);
+      // showSnackBar(top_context, e.message!);
       return null;
     } on Exception catch (e) {
       print("Exception ${e.toString()}");
@@ -71,7 +71,7 @@ class _LoginPage extends State<LoginPage>
       return creds.user;
     } on FirebaseAuthException catch (e) {
       print("Sign in error: ${e.message}");
-      showSnackBar(top_context, e.message!);
+      // showSnackBar(top_context, e.message!);
       return null;
     } on Exception catch (e) {
       print("Exception ${e.toString()}");
@@ -240,7 +240,7 @@ class _LoginPage extends State<LoginPage>
               String confirm_password = create_fields[2];
               if (password != confirm_password) {
                 /// TODO: don't use a snackbar for this, use validate:
-                showSnackBar(ctx, "Passwords don't match");
+                // showSnackBar(ctx, "Passwords don't match");
                 return;
               }
 

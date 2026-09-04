@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gapper/pages/frames/setup.dart';
 import 'app.dart';
 
@@ -16,9 +17,13 @@ import 'package:gapper/pages/frames/setup/gemini_key.dart';
 
 Future<void> main() async {
   print("Running with Firebase Enabled :  ${FIREBASE_ENABLED}");
+  print("Running with NoIce Enabled :     ${OFFLINE}");
   print("Running with Gemini Enabled :    ${GEMINI_ENABLED}");
-  print("Running in offline mode :        ${OFFLINE}");
 
+  print("Running in offline mode :        ${OFFLINE}");
+  assertFeatures();
+
+  Filesystem.initialize();
 
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -29,6 +34,7 @@ Future<void> main() async {
     if (kDebugMode) {
       /// Start dev auth instance with `firebase emulators:start --only auth,`
       await FirebaseAuth.instance.useAuthEmulator("localhost", 9099);
+      FirebaseFirestore.instance.useFirestoreEmulator("localhost", 8080);
     }
   }
 
