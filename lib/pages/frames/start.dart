@@ -19,6 +19,11 @@ class StartPage extends StatefulWidget {
 
 class _StartPage extends State<StartPage> {
   int current_idx = 0;
+  late PageController page_controller;
+
+  _StartPage() {
+    page_controller = PageController(initialPage: current_idx);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +71,7 @@ class _StartPage extends State<StartPage> {
 
           IconButton(icon: Icon(Icons.save),
             onPressed: () async {
-              Mood mood = (tab_frames[0] as MoodTab).current_mood;
+              Mood mood = (tab_frames[0] as MoodTab).state.current_mood;
               if (FIREBASE_ENABLED) {
                 db.collection("moods").add(mood.toJson());
               }
@@ -84,7 +89,10 @@ class _StartPage extends State<StartPage> {
         ],
       ),
       body: Padding(
-        child: tab_frames[current_idx],
+        child: PageView(
+          children: tab_frames,
+          controller: page_controller,
+        ),
         padding: EdgeInsetsGeometry.all(10),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -92,6 +100,7 @@ class _StartPage extends State<StartPage> {
         onTap: (_idx) {
           setState(() {
             current_idx = _idx;
+            page_controller.jumpToPage(current_idx);
           });
         },
         type: BottomNavigationBarType.fixed,

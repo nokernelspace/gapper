@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 
 class MoodToggle extends StatefulWidget {
-  bool boolean;
-  Text? label;
-  MoodToggle(this.boolean, {this.label, super.key});
+  final bool boolean;
+  final Text? label;
+  final ValueChanged<bool>? onChanged;
+  const MoodToggle(this.boolean, {this.label, this.onChanged, super.key});
 
   @override
   State<MoodToggle> createState() => _MoodToggle();
 }
 
 class _MoodToggle extends State<MoodToggle> {
+  late bool _boolean;
+
+  @override
+  void initState() {
+    super.initState();
+    _boolean = widget.boolean;
+  }
+
   @override
   Widget build(BuildContext ctx) {
     return Row(
@@ -18,11 +27,12 @@ class _MoodToggle extends State<MoodToggle> {
         widget.label ?? SizedBox.shrink(),
         SizedBox(width: 42),
         Switch(
-          value: widget.boolean,
+          value: _boolean,
           onChanged: (value) {
             setState(() {
-              widget.boolean = !widget.boolean;
+              _boolean = !_boolean;
             });
+            widget.onChanged?.call(!_boolean);
           },
         ),
       ],

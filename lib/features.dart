@@ -3,6 +3,7 @@ import 'dart:io';
 const GEMINI_ENABLED = false;
 const FIREBASE_ENABLED = false;
 const NOICE_ENABLED = false;
+const VIEW_LOG_AS_SHEET = false;
 const OFFLINE = true;
 
 /// Assert that certain features are enabled

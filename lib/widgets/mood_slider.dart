@@ -1,26 +1,36 @@
 import 'package:flutter/material.dart';
 
 class MoodSlider extends StatefulWidget {
-  double value;
-  Text? label;
-  MoodSlider(this.value, {this.label, super.key});
+  final double value;
+  final Text? label;
+  final ValueChanged<double>? onChanged;
+  const MoodSlider(this.value, {this.label, this.onChanged, super.key});
 
   @override
   State<MoodSlider> createState() => _MoodSlider();
 }
 
 class _MoodSlider extends State<MoodSlider> {
+  late double _value;
+
+  @override
+  void initState() {
+    super.initState();
+    _value = widget.value;
+  }
+
   @override
   Widget build(BuildContext ctx) {
     return Column(
       children: [
         widget.label ?? SizedBox.shrink(),
         Slider(
-          value: widget.value,
+          value: _value,
           onChanged: (value) {
             setState(() {
-              widget.value = value;
+              _value = value;
             });
+            widget.onChanged?.call(value);
           },
         ),
       ],

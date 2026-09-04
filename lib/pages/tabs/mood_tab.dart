@@ -4,17 +4,29 @@ import 'package:gapper/widgets/mood_toggle.dart';
 import 'package:gapper/widgets/mood_slider.dart';
 
 class MoodTab extends StatefulWidget {
-  MoodTab({super.key})
+  late _MoodTab state;
+
+  MoodTab({super.key});
   /// State
-  Mood current_mood = Mood();
   @override
-  State<MoodTab> createState() => _MoodTab();
+  State<MoodTab> createState() {
+    var state = _MoodTab();
+    this.state = state;
+    return state;
+  }
 }
 
-class _MoodTab extends State<MoodTab> {
+class _MoodTab extends State<MoodTab>
+with AutomaticKeepAliveClientMixin {
+  Mood current_mood = Mood();
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext ctx) {
+    super.build(ctx);
+
     return Scaffold(
       body: SizedBox(
         width: double.infinity,
@@ -33,28 +45,28 @@ class _MoodTab extends State<MoodTab> {
                   0.0
                 ),
                 child:Column(children: [
-              MoodToggle(widget.current_mood.modes.learning, label: const Text(" Learning")),
-              MoodToggle(widget.current_mood.modes.physical, label: const Text(" Physical")),
-              MoodToggle(widget.current_mood.modes.relax,    label: const Text("   Relax  ")),
-              MoodToggle(widget.current_mood.modes.working,  label: const Text(" Working")),
+              MoodToggle(current_mood.modes.learning, label: const Text(" Learning")),
+              MoodToggle(current_mood.modes.physical, label: const Text(" Physical")),
+              MoodToggle(current_mood.modes.relax,    label: const Text("   Relax  ")),
+              MoodToggle(current_mood.modes.working,  label: const Text(" Working")),
 
               ],)),
               SizedBox(height: 16),
 
               /// Happy
               Text("Happy", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24)),
-              MoodSlider(widget.current_mood.happy.joy, label: const Text("Joy")),
-              MoodSlider(widget.current_mood.happy.confidence, label: const Text("Confidence")),
-              MoodSlider(widget.current_mood.happy.determination, label: const Text("Determination")),
-              MoodSlider(widget.current_mood.happy.fufillment, label: const Text("Fufillment")),
+              MoodSlider(current_mood.happy.joy, label: const Text("Joy")),
+              MoodSlider(current_mood.happy.confidence, label: const Text("Confidence")),
+              MoodSlider(current_mood.happy.determination, label: const Text("Determination")),
+              MoodSlider(current_mood.happy.fufillment, label: const Text("Fufillment")),
               SizedBox(height: 16),
 
               /// Sad
               Text("Sad", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24)),
-              MoodSlider(widget.current_mood.sad.disgust, label: const Text("Disgust")),
-              MoodSlider(widget.current_mood.sad.dissapointment, label: const Text("Dissapointment")),
-              MoodSlider(widget.current_mood.sad.stress, label: const Text("Stress")),
-              MoodSlider(widget.current_mood.sad.worry, label: const Text("Worry")),
+              MoodSlider(current_mood.sad.disgust, label: const Text("Disgust")),
+              MoodSlider(current_mood.sad.dissapointment, label: const Text("Dissapointment")),
+              MoodSlider(current_mood.sad.stress, label: const Text("Stress")),
+              MoodSlider(current_mood.sad.worry, label: const Text("Worry")),
               SizedBox(height: 16),
 
               /// Notes

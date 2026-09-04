@@ -36,6 +36,9 @@ String sanitizeFilename(String name) {
     return '_$trimmed';
   }
 
+  /// This is really anoyying to think at on iOS (ㆆ _ ㆆ)
+  /// The `Files` app treats the first dot as the extension, not the last dot....
+  trimmed.replaceAll(".", "-");
   return trimmed;
 }
 class Toast extends StatelessWidget {
