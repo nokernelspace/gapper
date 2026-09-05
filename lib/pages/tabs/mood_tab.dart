@@ -1,26 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:gapper/data/mood.dart';
+import 'package:gapper/utils.dart';
+import 'package:gapper/widgets/dialogs.dart';
 import 'package:gapper/widgets/mood_toggle.dart';
 import 'package:gapper/widgets/mood_slider.dart';
 import 'package:gapper/features.dart';
 
 class MoodTab extends StatefulWidget {
   late _MoodTab state;
+  Key? key;
 
-  MoodTab({super.key});
+  MoodTab(this.key);
 
   /// State
   @override
   // ignore: no_logic_in_create_state
   State<MoodTab> createState() {
-    var state = _MoodTab();
+    var state = _MoodTab(this.key);
     this.state = state;
     return state;
   }
 }
 
 class _MoodTab extends State<MoodTab> with AutomaticKeepAliveClientMixin {
+  Key? key;
+  _MoodTab(this.key);
+
   Mood current_mood = Mood();
 
   @override
@@ -133,19 +139,42 @@ class _MoodTab extends State<MoodTab> with AutomaticKeepAliveClientMixin {
                       itemBuilder: (ctx, idx) {
                         return Slidable(
                           startActionPane: ActionPane(
+                            key: const ValueKey(0),
                             extentRatio: SLIDABLE_EXTENT,
                             motion: const ScrollMotion(),
                             dismissible: DismissiblePane(onDismissed: () {}),
                             children: [
                               SlidableAction(
-                                onPressed: (ctx) {},
+                                onPressed: (ctx) {
+                                  showCancelableMessageBox(
+                                    ctx,
+                                    "Delete?",
+                                    "Are you sure you want to delete this bullet?",
+                                    onConfirm: () {
+                                      showSnackBar(context, "NOOOOOOOOOOOOOOOOOOOOOOO (屮ﾟДﾟ)屮");
+                                    },
+                                    onCancel: () {
+
+                                    },
+                                  );
+                                },
                                 icon: Icons.delete,
                                 backgroundColor: Colors.red,
                                 label: "delete",
                               ),
                               SlidableAction(
                                 flex: 3,
-                                onPressed: (ctx) {},
+                                onPressed: (ctx) {
+                                  TextEditingController controller =
+                                      TextEditingController();
+                                  controller.text = "asdads";
+                                  showEditDialogBox(
+                                    ctx,
+                                    "Edit",
+                                    controller,
+                                    () {},
+                                  );
+                                },
                                 icon: Icons.edit,
                                 backgroundColor: Colors.yellow,
                                 label: "edit",
@@ -154,11 +183,7 @@ class _MoodTab extends State<MoodTab> with AutomaticKeepAliveClientMixin {
                           ),
                           child: ConstrainedBox(
                             constraints: BoxConstraints(minHeight: 50),
-                            child: Row(
-                              children: [
-                                Text("Hello World")
-                              ]
-                            ),
+                            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [Text("Hello World")]),
                           ),
                         );
                       },

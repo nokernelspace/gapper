@@ -77,6 +77,18 @@ class Collection {
 
     return out;
   }
+
+  List<Mood> sortedListSync() {
+    List<Mood> out = List.empty(growable: true);
+    for (final file in Directory('${dir.path}').listSync()) {
+      if (file is File) {
+        var txt = file.readAsStringSync();
+        out.add(Mood.fromJson(jsonDecode(txt)));
+      }
+    }
+
+    return out;
+  }
 }
 
 final db = Filesystem.DATABASE;

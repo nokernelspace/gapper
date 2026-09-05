@@ -6,7 +6,9 @@ const NOICE_ENABLED = false;
 const VIEW_LOG_AS_SHEET = true;
 const SHOW_BOTTOM_NAV = false;
 const OFFLINE = true;
-const SLIDABLE_EXTENT = 1.0;
+const SLIDABLE_EXTENT = 0.5;
+const LOG_VIEW_ONLY = false;
+const PEOPLE_LIST = [];
 
 /// Assert that certain features are enabled
 /// "There is a time and place to do that, but not now" ~Professor Oak

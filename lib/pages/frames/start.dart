@@ -21,13 +21,10 @@ class StartPage extends StatefulWidget {
 class _StartPage extends State<StartPage> {
   int current_idx = 0;
   late PageController page_controller;
-  late List<Mood> moods;
 
   _StartPage() {
     page_controller = PageController(initialPage: current_idx);
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +49,7 @@ class _StartPage extends State<StartPage> {
       }
     }();
 
-    List<Widget> tab_frames = [MoodTab()];
+    List<Widget> tab_frames = [MoodTab(widget.key)];
     () {
       if (GEMINI_ENABLED) {
         tab_frames.add(ChatsTab());
@@ -71,22 +68,28 @@ class _StartPage extends State<StartPage> {
     return Scaffold(
       appBar: AppBar(
         leading: VIEW_LOG_AS_SHEET
-            ? Builder(builder: (context) {
-                return IconButton(
-                icon: Icon(Icons.newspaper),
-                onPressed: () {
-                  Filesystem.collection("moods").sortedList().then((moods) {
-                    print("askdjansndk");
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return MoodLog(moods);
-                      },
-                    );
-                  });
+            ? Builder(
+                builder: (context) {
+                  return IconButton(
+                    icon: Icon(Icons.newspaper),
+                    onPressed: () {
+                      var moods = Filesystem.collection("moods").sortedListSync();
+                      showModalBottomSheet(
+                        isScrollControlled: true,
+                        showDragHandle: true,
+                        enableDrag: true,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return FractionallySizedBox(
+                            heightFactor: 0.85,
+                            child: MoodLog(moods),
+                          );
+                        },
+                      );
+                    },
+                  );
                 },
-              );
-            })
+              )
             : null,
         title: Text("idk"),
         actions: [
@@ -108,7 +111,7 @@ class _StartPage extends State<StartPage> {
                   sanitizeFilename(mood.value.time.toString()) + ".mood",
                 );
 
-                await Filesystem.collection("moods").sortedList();
+                //await Filesystem.collection("moods").sortedList();
               }
               showSnackBar(context, "Saved!");
             },
