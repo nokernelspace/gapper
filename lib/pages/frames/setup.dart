@@ -35,7 +35,7 @@ class _SetupPage extends State<SetupPage>
   }
 
 
-  final ValueNotifier<bool> loading = ValueNotifier<bool>(true);
+  final ValueNotifier<bool> loading_notifier = ValueNotifier<bool>(true);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class _SetupPage extends State<SetupPage>
     // TODO:  && Keys.FIREBASE_TOKEN == null
     else if (!OFFLINE) {
       total++;
-      setup_pages.add(LoginFrame(loading));
+      setup_pages.add(LoginFrame(loading_notifier));
     }
 
 
@@ -76,7 +76,7 @@ class _SetupPage extends State<SetupPage>
             bottom: PreferredSize(
                 preferredSize: const Size.fromHeight(4),
                 child: ValueListenableBuilder<bool>(
-                    valueListenable: loading,
+                    valueListenable: loading_notifier,
                     builder: (ctx, isLoading, child) {
                       return isLoading ? LinearProgressIndicator(
                         // value: controller.value

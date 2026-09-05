@@ -51,6 +51,8 @@ dependencies:
 
   smooth_page_indicator: ^1.2.0   # For the little dots for PageViews
 
+  flutter_slidable: ^4.0.3        # Slide to dismess or edit
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

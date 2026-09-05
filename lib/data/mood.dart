@@ -1,8 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+
+import 'dart:developer' as developer;
+
+typedef Bullet = String;
 
 class Mood {
   DateTime time = DateTime.now();
-  List<String> notes = List.from([]);   // Equivalent to List.empty(growable: true)
+  List<Bullet> notes = List.from([]);
+
+  /// Equivalent to List.empty(growable: true)
 
   Modes modes = Modes();
   Happy happy = Happy();
@@ -10,32 +18,39 @@ class Mood {
   People people = People.I;
 
   Mood();
-  Mood.from(this.modes, this.happy, this.sad, this.people);
+  Mood.from(this.modes, this.happy, this.sad, this.people, this.notes);
 
   dynamic toJson() => {
     'modes': modes.toJson(),
     'happy': happy.toJson(),
     'sad': sad.toJson(),
     'people': people.toJson(),
+    'notes': notes.map((x) => x).toList(),
   };
 
-  static Mood fromJson(Map<String, dynamic> json) => Mood.from(
-    Modes.fromJson(json["modes"]),
-    Happy.fromJson(json["happy"]),
-    Sad.fromJson(json["sad"]),
-    People.fromJson(json["people"]),
-  );
+  static Mood fromJson(Map<String, dynamic> json) {
+    return Mood.from(
+      Modes.fromJson(json["modes"]),
+      Happy.fromJson(json["happy"]),
+      Sad.fromJson(json["sad"]),
+      People.fromJson(json["people"]),
+      List<Bullet>.from(json["notes"].map((x) {return x as Bullet;})),
+    );
+  }
 }
 
 enum People {
-  FRIENDS, FAMILY, I;
+  FRIENDS,
+  FAMILY,
+  I;
 
   /// NOTE: the list
-  dynamic toJson() => [this.name];
-  static People fromJson(List<String> people) => People.values.byName(people.first);
-
-  static List<DropdownMenuEntry<People>> entries = (){
-    List<DropdownMenuEntry<People>> out  =  List.empty(growable: true);
+  dynamic toJson() => this.name;
+  static People fromJson(String people) {
+    return People.values.byName(people);
+  }
+  static List<DropdownMenuEntry<People>> entries = () {
+    List<DropdownMenuEntry<People>> out = List.empty(growable: true);
     for (var v in People.values) {
       out.add(DropdownMenuEntry(value: v, label: v.name));
     }
@@ -59,12 +74,12 @@ class Modes {
     "learning": learning,
   };
 
-  static Modes fromJson(Map<String, bool> modes) {
+  static Modes fromJson(Map<String, dynamic> modes) {
     return Modes.from(
-      modes["relax"]!,
-      modes["physical"]!,
-      modes["working"]!,
-      modes["learning"]!,
+      modes["relax"] as bool,
+      modes["physical"] as bool,
+      modes["working"] as bool,
+      modes["learning"] as bool,
     );
   }
 }
@@ -85,12 +100,12 @@ class Happy {
     "determination": determination,
   };
 
-  static Happy fromJson(Map<String, double> json) {
+  static Happy fromJson(Map<String, dynamic> json) {
     return Happy.from(
-      json["joy"]!,
-      json["fufillment"]!,
-      json["confidence"]!,
-      json["determination"]!,
+      json["joy"] as double,
+      json["fufillment"] as double,
+      json["confidence"] as double,
+      json["determination"] as double,
     );
   }
 }
@@ -111,12 +126,12 @@ class Sad {
     "disgust": disgust,
   };
 
-  static Sad fromJson(Map<String, double> json) {
+  static Sad fromJson(Map<String, dynamic> json) {
     return Sad.from(
-      json["joy"]!,
-      json["fufillment"]!,
-      json["confidence"]!,
-      json["determination"]!,
+      json["stress"] as double,
+      json["dissapointment"] as double,
+      json["worry"] as double,
+      json["disgust"] as double,
     );
   }
 }

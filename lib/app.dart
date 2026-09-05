@@ -95,7 +95,7 @@ class _App extends State<App> {
 
             initialRoute: '/',
             routes: {
-              '/' : (ctx) => const StartPage(title: "asdasd"),
+              '/' : (ctx) => const StartPage(),
               '/setup' : (ctx) => SetupPage(),
             }
         )

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class NoteboksTab extends StatelessWidget {
+class NotebooksTab extends StatelessWidget {
   @override
   Widget build(BuildContext ctx) {
     return Scaffold();

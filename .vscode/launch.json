@@ -9,7 +9,8 @@
             "request": "launch",
             "type": "dart",
             "program": "lib/main.dart",
-            "deviceId": "emulator-5554"
+            "deviceId": "emulator-5554",
+            "flutterMode": "debug"
         },
         {
             "name": "iOS Simulator (Debug)",
@@ -17,6 +18,7 @@
             "type": "dart",
             "program": "lib/main.dart",
             "deviceId": "767FBF41-99F5-47AC-AFAC-5CA9E74C46C1",
+            "flutterMode": "debug"
         },
         {
             "name": "iPhone (Debug)",
@@ -24,6 +26,7 @@
             "type": "dart",
             "program": "lib/main.dart",
             "deviceId": "00008110-001830DE0C52801E",
+            "flutterMode": "debug"
         },
         {
             "name": "Pixel Fold (Debug)",
@@ -31,6 +34,7 @@
             "type": "dart",
             "program": "lib/main.dart",
             "deviceId": "37231FDHS000F8",
+            "flutterMode": "debug"
         },
 
 

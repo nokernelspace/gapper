@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:gapper/data/mood.dart';
 import 'package:gapper/widgets/mood_toggle.dart';
 import 'package:gapper/widgets/mood_slider.dart';
+import 'package:gapper/features.dart';
 
 class MoodTab extends StatefulWidget {
   late _MoodTab state;
@@ -67,12 +69,12 @@ class _MoodTab extends State<MoodTab> with AutomaticKeepAliveClientMixin {
                       label: const Text("People"),
                       initialSelection: People.I,
                       onSelected: (People? who) {
-                        if (who != null)  {
+                        if (who != null) {
                           current_mood.people = who;
                         }
                       },
                       dropdownMenuEntries: People.entries,
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -116,7 +118,55 @@ class _MoodTab extends State<MoodTab> with AutomaticKeepAliveClientMixin {
               SizedBox(height: 16),
 
               /// Notes
-              Column(),
+              Column(
+                children: [
+                  Text(
+                    "Notes",
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
+                  ),
+                  //SizedBox(
+                  // height: 100,
+                  ConstrainedBox(
+                    constraints: BoxConstraints(maxHeight: 500),
+                    child: ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (ctx, idx) {
+                        return Slidable(
+                          startActionPane: ActionPane(
+                            extentRatio: SLIDABLE_EXTENT,
+                            motion: const ScrollMotion(),
+                            dismissible: DismissiblePane(onDismissed: () {}),
+                            children: [
+                              SlidableAction(
+                                onPressed: (ctx) {},
+                                icon: Icons.delete,
+                                backgroundColor: Colors.red,
+                                label: "delete",
+                              ),
+                              SlidableAction(
+                                flex: 3,
+                                onPressed: (ctx) {},
+                                icon: Icons.edit,
+                                backgroundColor: Colors.yellow,
+                                label: "edit",
+                              ),
+                            ],
+                          ),
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(minHeight: 50),
+                            child: Row(
+                              children: [
+                                Text("Hello World")
+                              ]
+                            ),
+                          ),
+                        );
+                      },
+                      itemCount: 10,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

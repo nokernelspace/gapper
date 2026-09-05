@@ -27,7 +27,12 @@ class Filesystem {
 
   static void initialize() async {
     TMP_DIR = await getTemporaryDirectory();
-    DOCS_DIR = await getApplicationDocumentsDirectory();
+    if (Platform.isAndroid) {
+      DOCS_DIR = await getExternalStorageDirectory();
+    }
+    else {
+      DOCS_DIR = await getApplicationDocumentsDirectory();
+    }
     APP_SUPPORT = await getApplicationSupportDirectory();
   }
 
@@ -37,12 +42,12 @@ class Filesystem {
   static final DATABASE = THE_CLOUD;
 
   /// Copying the syntax of firebase firestore
-  static Future<Collection> collection(String name) async {
+  static Collection collection(String name) {
     final directory = Directory('${DOCS_DIR.path}/${name}');
 
-    if (!await directory.exists()) {
+    if (!directory.existsSync()) {
       //recursive: true
-      await directory.create();
+      directory.createSync();
     }
 
     return Collection(directory);
@@ -55,11 +60,22 @@ class Collection {
 
   Future<void> add(Map<String, dynamic> ser_json, String filename) async {
     final file = File('${dir.path}/${filename}');
-    if (!await file.exists()) {
+    if (!await file.existsSync()) {
       await file.create(recursive: true);
     }
     print("Wrote to ${file.path}");
     await file.writeAsString(jsonEncode(ser_json));
+  }
+  Future<List<Mood>> sortedList() async {
+    List<Mood> out = List.empty(growable: true);
+    await for (final file in Directory('${dir.path}').list()) {
+      if (file is File) {
+        var txt = file.readAsStringSync();
+        out.add(Mood.fromJson(jsonDecode(txt)));
+      }
+    }
+
+    return out;
   }
 }
 
