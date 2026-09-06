@@ -28,24 +28,24 @@ class Collection<T> {
     await for (final file in Directory('${dir.path}').list()) {
       if (file is File && getFilePathExtension(file.path) == "mood") {
         var txt = file.readAsStringSync();
-        out.add(T.name fromJson(jsonDecode(txt)));
+        // out.add(T.name fromJson(jsonDecode(txt)));
       }
     }
 
     return out;
   }
 
-  List<Mood> sortedListSync() {
-    List<Mood> out = List.empty(growable: true);
-    for (final file in Directory('${dir.path}').listSync()) {
-      if (file is File && getFilePathExtension(file.path) == "mood") {
-        var txt = file.readAsStringSync();
-        out.add(Mood.fromJson(jsonDecode(txt)));
-      }
-    }
+  // List<Mood> sortedListSync() {
+  //   List<Mood> out = List.empty(growable: true);
+  //   for (final file in Directory('${dir.path}').listSync()) {
+  //     if (file is File && getFilePathExtension(file.path) == "mood") {
+  //       var txt = file.readAsStringSync();
+  //       // out.add(Mood.fromJson(jsonDecode(txt)));
+  //     }
+  //   }
 
-    return out;
-  }
+  //   return out;
+  // }
 }
 
 class Filesystem {
@@ -68,8 +68,8 @@ class Filesystem {
 
   // https://xkcd.com/908/
   // They changed it
-  static final THE_CLOUD = FirebaseFirestore.instance;
-  static final DATABASE = THE_CLOUD;
+  // static final THE_CLOUD = FirebaseFirestore.instance;
+  // static final DATABASE = THE_CLOUD;
 
   /// Wrapper For keeping it simple, stupid
   static Collection dir(String name) {
