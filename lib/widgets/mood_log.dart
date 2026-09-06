@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:gapper/data/mood.dart';
 
-class MoodLog extends StatelessWidget {
+class MoodLog extends StatefulWidget {
   List<Mood> moods;
-  final ValueNotifier<Mood> mood;
-  MoodLog(this.moods, this.mood, {super.key});
+  final ValueNotifier<Mood> current_mood;
+  MoodLog(this.moods, this.current_mood, {super.key});
+
+  @override
+  State<MoodLog> createState() =>
+      _MoodLog(this.moods, this.current_mood, key: this.key);
+}
+
+class _MoodLog extends State<MoodLog> {
+  List<Mood> moods;
+  final ValueNotifier<Mood> current_mood;
+  Key? key;
+  _MoodLog(this.moods, this.current_mood, {this.key});
 
   @override
   Widget build(BuildContext ctx) {
@@ -29,11 +40,13 @@ class MoodLog extends StatelessWidget {
             var mood = moods[idx]!;
 
             return ListTile(
-              key: key, 
+              key: key,
               title: Text(mood.people.name),
               onTap: () {
-
-              }
+                setState(() {
+                  current_mood.value = mood;
+                });
+              },
             );
           },
           separatorBuilder: (BuildContext ctx, int idx) {

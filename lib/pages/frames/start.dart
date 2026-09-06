@@ -12,17 +12,19 @@ import 'package:gapper/widgets/mood_log.dart';
 import 'dart:async';
 
 class StartPage extends StatefulWidget {
-  const StartPage({super.key});
+  ValueNotifier<Mood> mood = ValueNotifier<Mood>(Mood());
+  StartPage({super.key});
 
   @override
-  State<StartPage> createState() => _StartPage();
+  State<StartPage> createState() => _StartPage(this.mood);
 }
 
 class _StartPage extends State<StartPage> {
   int current_idx = 0;
   late PageController page_controller;
+  ValueNotifier<Mood> mood;
 
-  _StartPage() {
+  _StartPage(this.mood) {
     page_controller = PageController(initialPage: current_idx);
   }
 
@@ -49,7 +51,7 @@ class _StartPage extends State<StartPage> {
       }
     }();
 
-    List<Widget> tab_frames = [MoodTab(widget.key)];
+    List<Widget> tab_frames = [MoodTab(widget.key, mood)];
     () {
       if (GEMINI_ENABLED) {
         tab_frames.add(ChatsTab());
@@ -63,7 +65,6 @@ class _StartPage extends State<StartPage> {
     // var mood_tab = (tab_frames[0] as MoodTab);
     // mood_tab.state.current_mood.toString();
 
-    ValueNotifier<Mood> mood = ValueNotifier(Mood());
     var now = DateTime.now();
 
     return Scaffold(

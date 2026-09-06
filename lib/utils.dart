@@ -41,3 +41,9 @@ String sanitizeFilename(String name) {
   trimmed.replaceAll(".", "-");
   return trimmed;
 }
+
+
+String getFilePathExtension(String path) {
+  String ext = path.split('.').last;
+  return ext;
+}

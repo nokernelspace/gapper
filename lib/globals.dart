@@ -69,7 +69,7 @@ class Collection {
   Future<List<Mood>> sortedList() async {
     List<Mood> out = List.empty(growable: true);
     await for (final file in Directory('${dir.path}').list()) {
-      if (file is File) {
+      if (file is File && getFilePathExtension(file.path) == "mood") {
         var txt = file.readAsStringSync();
         out.add(Mood.fromJson(jsonDecode(txt)));
       }
@@ -81,7 +81,7 @@ class Collection {
   List<Mood> sortedListSync() {
     List<Mood> out = List.empty(growable: true);
     for (final file in Directory('${dir.path}').listSync()) {
-      if (file is File) {
+      if (file is File && getFilePathExtension(file.path) == "mood") {
         var txt = file.readAsStringSync();
         out.add(Mood.fromJson(jsonDecode(txt)));
       }
