@@ -71,7 +71,7 @@ class _MoodTab extends State<MoodTab> with AutomaticKeepAliveClientMixin {
                           label: const Text(" Physical"),
                           onChanged: (value) {
                             setState(() {
-                              mood.modes.learning = value;
+                              mood.modes.physical = value;
                             });
                           },
                         ),
@@ -80,7 +80,7 @@ class _MoodTab extends State<MoodTab> with AutomaticKeepAliveClientMixin {
                           label: const Text("   Relax  "),
                           onChanged: (value) {
                             setState(() {
-                              mood.modes.learning = value;
+                              mood.modes.relax = value;
                             });
                           },
                         ),
@@ -89,7 +89,7 @@ class _MoodTab extends State<MoodTab> with AutomaticKeepAliveClientMixin {
                           label: const Text(" Working"),
                           onChanged: (value) {
                             setState(() {
-                              mood.modes.learning = value;
+                              mood.modes.working = value;
                             });
                           },
                         ),

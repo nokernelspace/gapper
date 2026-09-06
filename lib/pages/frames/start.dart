@@ -78,7 +78,6 @@ class _StartPage extends State<StartPage> {
     // var mood_tab = (tab_frames[0] as MoodTab);
     // mood_tab.state.current_mood.toString();
 
-    var now = DateTime.now();
 
     return Scaffold(
       appBar: AppBar(
@@ -110,12 +109,7 @@ class _StartPage extends State<StartPage> {
             : null,
         title: MaterialButton(
           child: Text(
-            now.month.toString() +
-                "-" +
-                now.day.toString() +
-                "-" +
-                now.year.toString(),
-
+            formatTime(mood.value.time),
             style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w500),
           ),
           onPressed: () {},

@@ -75,7 +75,7 @@ String formatDateTime(DateTime time) {
       return time.hour - 12;
     }
   }();
-  return "${time.year}-${time.month}-${time.day} ${time.hour}:${time.minute} ${AM ? 'AM' : 'PM'}";
+  return "${time.year}-${time.month}-${time.day} ${hour}:${time.minute} ${AM ? 'AM' : 'PM'}";
 }
 
 String formatDate(DateTime time) {
@@ -90,5 +90,5 @@ String formatTime(DateTime time) {
       return time.hour - 12;
     }
   }();
-  return "${time.hour}:${time.minute} ${AM ? 'AM' : 'PM'}";
+  return "${hour}:${time.minute} ${AM ? 'AM' : 'PM'}";
 }
