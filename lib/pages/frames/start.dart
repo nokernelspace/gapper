@@ -64,6 +64,7 @@ class _StartPage extends State<StartPage> {
     // mood_tab.state.current_mood.toString();
 
     ValueNotifier<Mood> mood = ValueNotifier(Mood());
+    var now = DateTime.now();
 
     return Scaffold(
       appBar: AppBar(
@@ -73,7 +74,8 @@ class _StartPage extends State<StartPage> {
                   return IconButton(
                     icon: Icon(Icons.newspaper),
                     onPressed: () {
-                      var moods = Filesystem.collection("moods").sortedListSync();
+                      var moods = Filesystem.collection("moods")
+                          .sortedListSync();
                       showModalBottomSheet(
                         isScrollControlled: true,
                         showDragHandle: true,
@@ -82,7 +84,7 @@ class _StartPage extends State<StartPage> {
                         builder: (BuildContext context) {
                           return FractionallySizedBox(
                             heightFactor: 0.85,
-                            child: MoodLog(moods),
+                            child: MoodLog(moods, mood),
                           );
                         },
                       );
@@ -91,7 +93,21 @@ class _StartPage extends State<StartPage> {
                 },
               )
             : null,
-        title: Text("idk"),
+        title: MaterialButton(
+          child: Text(
+            now.month.toString() +
+                "-" +
+                now.day.toString() +
+                "-" +
+                now.year.toString(),
+
+                style: const TextStyle(
+                  fontSize: 21,
+                  fontWeight: FontWeight.w500
+                ),
+          ),
+          onPressed: () {},
+        ),
         actions: [
           IconButton(icon: Icon(Icons.add), onPressed: () {}),
 
@@ -120,7 +136,7 @@ class _StartPage extends State<StartPage> {
       ),
       body: Padding(
         child: PageView(children: tab_frames, controller: page_controller),
-        padding: EdgeInsetsGeometry.all(10),
+        padding: EdgeInsetsGeometry.fromLTRB(10, 0, 10, 0),
       ),
       bottomNavigationBar: !VIEW_LOG_AS_SHEET
           ? BottomNavigationBar(

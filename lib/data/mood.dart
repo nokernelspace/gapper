@@ -49,10 +49,18 @@ enum People {
   static People fromJson(String people) {
     return People.values.byName(people);
   }
-  static List<DropdownMenuEntry<People>> entries = () {
+  static List<DropdownMenuEntry<People>> menuEntries = () {
     List<DropdownMenuEntry<People>> out = List.empty(growable: true);
     for (var v in People.values) {
       out.add(DropdownMenuEntry(value: v, label: v.name));
+    }
+    return out;
+  }();
+
+  static List<DropdownMenuItem<People>> menuItems = () {
+    List<DropdownMenuItem<People>> out = List.empty(growable: true);
+    for (var v in People.values) {
+      out.add(DropdownMenuItem(value: v, child: Text(v.name)));
     }
     return out;
   }();

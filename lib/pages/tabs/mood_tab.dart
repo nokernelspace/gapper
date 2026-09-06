@@ -10,14 +10,14 @@ import 'package:gapper/features.dart';
 class MoodTab extends StatefulWidget {
   late _MoodTab state;
   Key? key;
-
-  MoodTab(this.key);
+  ValueNotifier<Mood> mood;
+  MoodTab(this.key, this.mood);
 
   /// State
   @override
   // ignore: no_logic_in_create_state
   State<MoodTab> createState() {
-    var state = _MoodTab(this.key);
+    var state = _MoodTab(this.key, this.mood);
     this.state = state;
     return state;
   }
@@ -25,9 +25,10 @@ class MoodTab extends StatefulWidget {
 
 class _MoodTab extends State<MoodTab> with AutomaticKeepAliveClientMixin {
   Key? key;
-  _MoodTab(this.key);
+  _MoodTab(this.key, this.mood);
 
-  Mood current_mood = Mood();
+  ValueNotifier<Mood> mood;
+  
 
   @override
   bool get wantKeepAlive => true;
@@ -54,33 +55,45 @@ class _MoodTab extends State<MoodTab> with AutomaticKeepAliveClientMixin {
                 child: Column(
                   children: [
                     MoodToggle(
-                      current_mood.modes.learning,
+                      mood.value.modes.learning,
                       label: const Text(" Learning"),
                     ),
                     MoodToggle(
-                      current_mood.modes.physical,
+                      mood.value.modes.physical,
                       label: const Text(" Physical"),
                     ),
                     MoodToggle(
-                      current_mood.modes.relax,
+                      mood.value.modes.relax,
                       label: const Text("   Relax  "),
                     ),
                     MoodToggle(
-                      current_mood.modes.working,
+                      mood.value.modes.working,
                       label: const Text(" Working"),
                     ),
                     SizedBox(height: 10),
-                    DropdownMenu<People>(
-                      requestFocusOnTap: true,
-                      label: const Text("People"),
-                      initialSelection: People.I,
-                      onSelected: (People? who) {
-                        if (who != null) {
-                          current_mood.people = who;
-                        }
+                    DropdownButton<People>(
+                      value: mood.value.people,
+                      hint: const Text("People"),
+                      isExpanded: true,
+                      items: People.menuItems,
+                      onChanged: (val) {
+                        setState(() {
+                          if (val != null)
+                            mood.value.people = val;
+                        });
                       },
-                      dropdownMenuEntries: People.entries,
                     ),
+                    // DropdownMenu<People>(
+                    //   requestFocusOnTap: true,
+                    //   label: const Text("People"),
+                    //   initialSelection: People.I,
+                    //   onSelected: (People? who) {
+                    //     if (who != null) {
+                    //       current_mood.people = who;
+                    //     }
+                    //   },
+                    //   dropdownMenuEntries: People.entries,
+                    // ),
                   ],
                 ),
               ),
@@ -91,17 +104,17 @@ class _MoodTab extends State<MoodTab> with AutomaticKeepAliveClientMixin {
                 "Happy",
                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
               ),
-              MoodSlider(current_mood.happy.joy, label: const Text("Joy")),
+              MoodSlider(mood.value.happy.joy, label: const Text("Joy")),
               MoodSlider(
-                current_mood.happy.confidence,
+                mood.value.happy.confidence,
                 label: const Text("Confidence"),
               ),
               MoodSlider(
-                current_mood.happy.determination,
+                mood.value.happy.determination,
                 label: const Text("Determination"),
               ),
               MoodSlider(
-                current_mood.happy.fufillment,
+                mood.value.happy.fufillment,
                 label: const Text("Fufillment"),
               ),
               SizedBox(height: 16),
@@ -112,15 +125,15 @@ class _MoodTab extends State<MoodTab> with AutomaticKeepAliveClientMixin {
                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
               ),
               MoodSlider(
-                current_mood.sad.disgust,
+                mood.value.sad.disgust,
                 label: const Text("Disgust"),
               ),
               MoodSlider(
-                current_mood.sad.dissapointment,
+                mood.value.sad.dissapointment,
                 label: const Text("Dissapointment"),
               ),
-              MoodSlider(current_mood.sad.stress, label: const Text("Stress")),
-              MoodSlider(current_mood.sad.worry, label: const Text("Worry")),
+              MoodSlider(mood.value.sad.stress, label: const Text("Stress")),
+              MoodSlider(mood.value.sad.worry, label: const Text("Worry")),
               SizedBox(height: 16),
 
               /// Notes
@@ -132,63 +145,93 @@ class _MoodTab extends State<MoodTab> with AutomaticKeepAliveClientMixin {
                   ),
                   //SizedBox(
                   // height: 100,
-                  ConstrainedBox(
-                    constraints: BoxConstraints(maxHeight: 500),
-                    child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (ctx, idx) {
-                        return Slidable(
-                          startActionPane: ActionPane(
-                            key: const ValueKey(0),
-                            extentRatio: SLIDABLE_EXTENT,
-                            motion: const ScrollMotion(),
-                            dismissible: DismissiblePane(onDismissed: () {}),
-                            children: [
-                              SlidableAction(
-                                onPressed: (ctx) {
-                                  showCancelableMessageBox(
-                                    ctx,
-                                    "Delete?",
-                                    "Are you sure you want to delete this bullet?",
-                                    onConfirm: () {
-                                      showSnackBar(context, "NOOOOOOOOOOOOOOOOOOOOOOO (屮ﾟДﾟ)屮");
-                                    },
-                                    onCancel: () {
+                  Column(
+                    children: [
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (ctx, idx) {
+                          return Slidable(
+                            startActionPane: ActionPane(
+                              key: const ValueKey(0),
+                              extentRatio: SLIDABLE_EXTENT,
+                              motion: const ScrollMotion(),
 
-                                    },
-                                  );
-                                },
-                                icon: Icons.delete,
-                                backgroundColor: Colors.red,
-                                label: "delete",
-                              ),
-                              SlidableAction(
-                                flex: 3,
-                                onPressed: (ctx) {
-                                  TextEditingController controller =
-                                      TextEditingController();
-                                  controller.text = "asdads";
-                                  showEditDialogBox(
-                                    ctx,
-                                    "Edit",
-                                    controller,
-                                    () {},
-                                  );
-                                },
-                                icon: Icons.edit,
-                                backgroundColor: Colors.yellow,
-                                label: "edit",
-                              ),
-                            ],
-                          ),
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(minHeight: 50),
-                            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [Text("Hello World")]),
-                          ),
-                        );
-                      },
-                      itemCount: 10,
-                    ),
+                              /// TODO: figure this out
+                              // dismissible: DismissiblePane(
+                              //   key: ValueKey(0),
+                              //   onDismissed: () {}),
+                              children: [
+                                SlidableAction(
+                                  onPressed: (ctx) {
+                                    showCancelableMessageBox(
+                                      ctx,
+                                      "Delete?",
+                                      "Are you sure you want to delete this bullet?",
+                                      onConfirm: () {
+                                        setState(() {
+                                          mood.value.notes.removeAt(idx);
+                                        });
+                                        showSnackBar(
+                                          context,
+                                          "NOOOOOOOOOOOOOOOOOOOOOOO (屮ﾟДﾟ)屮",
+                                        );
+                                      },
+                                      onCancel: () {},
+                                    );
+                                  },
+                                  icon: Icons.delete,
+                                  backgroundColor: Colors.red,
+                                  label: "delete",
+                                ),
+                                SlidableAction(
+                                  flex: 3,
+                                  onPressed: (ctx) {
+                                    TextEditingController controller =
+                                        TextEditingController();
+                                    controller.text = mood.value.notes[idx];
+                                    showEditDialogBox(
+                                      ctx,
+                                      "Edit",
+                                      controller,
+                                      () {
+                                        setState(() {
+                                          mood.value.notes[idx] =
+                                              controller.text;
+                                        });
+                                      },
+                                    );
+                                  },
+                                  icon: Icons.edit,
+                                  backgroundColor: Colors.yellow,
+                                  label: "edit",
+                                ),
+                              ],
+                            ),
+                            child: ListTile(
+                              title: Text(mood.value.notes[idx]),
+                            ),
+                            // child: ConstrainedBox(
+                            //   constraints: BoxConstraints(minHeight: 50),
+                            //   child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [Text("Hello World")]),
+                            // ),
+                          );
+                        },
+                        itemCount: mood.value.notes.length,
+                      ),
+
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            mood.value.notes.add("Slide to edit ➡");
+                          });
+                        },
+                        icon: Icon(Icons.add),
+                      ),
+
+                      // TANG: Alfonzo >> Infinitly Sized Box >> ConstrainedBox => Default Constrains => Sized Box => Lines => †
+                      SizedBox(height: 30),
+                    ],
                   ),
                 ],
               ),
