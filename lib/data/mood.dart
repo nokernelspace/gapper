@@ -18,9 +18,11 @@ class Mood {
   People people = People.ME;
 
   Mood();
-  Mood.from(this.modes, this.happy, this.sad, this.people, this.notes);
+  Mood.from(this.time, this.modes, this.happy, this.sad, this.people, this.notes);
 
   dynamic toJson() => {
+    /// Timezone UTC
+    'time': jsonEncode(time.toIso8601String()),
     'modes': modes.toJson(),
     'happy': happy.toJson(),
     'sad': sad.toJson(),
@@ -30,6 +32,7 @@ class Mood {
 
   static Mood fromJson(Map<String, dynamic> json) {
     return Mood.from(
+      DateTime.parse(jsonDecode(json["time"]) as String),
       Modes.fromJson(json["modes"]),
       Happy.fromJson(json["happy"]),
       Sad.fromJson(json["sad"]),

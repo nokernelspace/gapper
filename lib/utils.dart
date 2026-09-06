@@ -12,11 +12,12 @@ void showSnackBar(BuildContext ctx, String msg) {
     ),
   );
 }
+
 String sanitizeFilename(String name) {
   // Remove/replace characters invalid on any major platform
   final sanitized = name
       .replaceAll(RegExp(r'[<>:"/\\|?*\x00-\x1F]'), '_')
-      .replaceAll(RegExp(r'\.{2,}'), '_')  // replace consecutive dots
+      .replaceAll(RegExp(r'\.{2,}'), '_') // replace consecutive dots
       .trim();
 
   // Remove leading/trailing dots and spaces (problematic on Windows)
@@ -26,9 +27,28 @@ String sanitizeFilename(String name) {
 
   // Windows reserved device names
   final reserved = {
-    'CON', 'PRN', 'AUX', 'NUL',
-    'COM1','COM2','COM3','COM4','COM5','COM6','COM7','COM8','COM9',
-    'LPT1','LPT2','LPT3','LPT4','LPT5','LPT6','LPT7','LPT8','LPT9',
+    'CON',
+    'PRN',
+    'AUX',
+    'NUL',
+    'COM1',
+    'COM2',
+    'COM3',
+    'COM4',
+    'COM5',
+    'COM6',
+    'COM7',
+    'COM8',
+    'COM9',
+    'LPT1',
+    'LPT2',
+    'LPT3',
+    'LPT4',
+    'LPT5',
+    'LPT6',
+    'LPT7',
+    'LPT8',
+    'LPT9',
   };
 
   final base = trimmed.split('.').first.toUpperCase();
@@ -42,8 +62,33 @@ String sanitizeFilename(String name) {
   return trimmed;
 }
 
-
 String getFilePathExtension(String path) {
   String ext = path.split('.').last;
   return ext;
+}
+
+String formatDateTime(DateTime time) {
+  var AM = true;
+  var hour = () {
+    if (time.hour > 12) {
+      AM = false;
+      return time.hour - 12;
+    }
+  }();
+  return "${time.year}-${time.month}-${time.day} ${time.hour}:${time.minute} ${AM ? 'AM' : 'PM'}";
+}
+
+String formatDate(DateTime time) {
+  return "${time.year}-${time.month}-${time.day}";
+}
+
+String formatTime(DateTime time) {
+  var AM = true;
+  var hour = () {
+    if (time.hour > 12) {
+      AM = false;
+      return time.hour - 12;
+    }
+  }();
+  return "${time.hour}:${time.minute} ${AM ? 'AM' : 'PM'}";
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gapper/data/mood.dart';
+import 'package:gapper/utils.dart';
 
 class MoodLog extends StatefulWidget {
   List<Mood> moods;
@@ -38,11 +39,20 @@ class _MoodLog extends State<MoodLog> {
           itemCount: moods.length,
           itemBuilder: (BuildContext ctx, int idx) {
             var mood = moods[idx]!;
+            var time = mood.time;
 
             return ListTile(
               key: key,
               title: Text(mood.people.name),
-              subtitle: Text(mood.time.toIso8601String()),
+              subtitle: Text(formatTime(time)),
+              trailing: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  mood.notes.length == 1 ? Text(mood.notes[0]) : Text("${mood.notes.length} Notes"),
+                  Text(formatDate(time))
+                ]
+              ),
+
               onTap: () {
                 setState(() {
                   current_mood.value = mood;

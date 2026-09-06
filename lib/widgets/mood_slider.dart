@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 
 class MoodSlider extends StatefulWidget {
-  final double value;
+  final double firstValue;
   final Text? label;
   final ValueChanged<double>? onChanged;
-  const MoodSlider(this.value, {this.label, this.onChanged, super.key});
+  const MoodSlider(this.firstValue, {this.label, this.onChanged, super.key});
 
   @override
-  State<MoodSlider> createState() => _MoodSlider(this.value, this.onChanged);
+  State<MoodSlider> createState() => _MoodSlider(this.onChanged);
 }
 
 class _MoodSlider extends State<MoodSlider> {
-  final double value;
   final ValueChanged<double>? onChanged;
-  _MoodSlider(this.value, this.onChanged);
+  _MoodSlider(this.onChanged);
   // late double _value;
 
   // @override
@@ -28,7 +27,7 @@ class _MoodSlider extends State<MoodSlider> {
       children: [
         widget.label ?? SizedBox.shrink(),
         Slider(
-          value: this.value,
+          value: widget.firstValue,
           onChanged: this.onChanged,
         ),
       ],

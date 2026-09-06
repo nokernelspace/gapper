@@ -60,18 +60,38 @@ class _MoodTab extends State<MoodTab> with AutomaticKeepAliveClientMixin {
                         MoodToggle(
                           mood.modes.learning,
                           label: const Text(" Learning"),
+                          onChanged: (value) {
+                            setState(() {
+                              mood.modes.learning = value;
+                            });
+                          },
                         ),
                         MoodToggle(
                           mood.modes.physical,
                           label: const Text(" Physical"),
+                          onChanged: (value) {
+                            setState(() {
+                              mood.modes.learning = value;
+                            });
+                          },
                         ),
                         MoodToggle(
                           mood.modes.relax,
                           label: const Text("   Relax  "),
+                          onChanged: (value) {
+                            setState(() {
+                              mood.modes.learning = value;
+                            });
+                          },
                         ),
                         MoodToggle(
                           mood.modes.working,
                           label: const Text(" Working"),
+                          onChanged: (value) {
+                            setState(() {
+                              mood.modes.learning = value;
+                            });
+                          },
                         ),
                         SizedBox(height: 10),
                         DropdownButton<People>(
@@ -106,18 +126,41 @@ class _MoodTab extends State<MoodTab> with AutomaticKeepAliveClientMixin {
                     "Happy",
                     style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
                   ),
-                  MoodSlider(mood.happy.joy, label: const Text("Joy")),
+                  MoodSlider(
+                    mood.happy.joy,
+                    label: const Text("Joy"),
+                    onChanged: (value) {
+                      setState(() {
+                        mood.happy.joy = value;
+                      });
+                    },
+                  ),
                   MoodSlider(
                     mood.happy.confidence,
                     label: const Text("Confidence"),
+                    onChanged: (value) {
+                      setState(() {
+                        mood.happy.confidence = value;
+                      });
+                    },
                   ),
                   MoodSlider(
                     mood.happy.determination,
                     label: const Text("Determination"),
+                    onChanged: (value) {
+                      setState(() {
+                        mood.happy.determination = value;
+                      });
+                    },
                   ),
                   MoodSlider(
                     mood.happy.fufillment,
                     label: const Text("Fufillment"),
+                    onChanged: (value) {
+                      setState(() {
+                        mood.happy.fufillment = value;
+                      });
+                    },
                   ),
                   SizedBox(height: 16),
 
@@ -129,16 +172,40 @@ class _MoodTab extends State<MoodTab> with AutomaticKeepAliveClientMixin {
                   MoodSlider(
                     mood.sad.disgust,
                     label: const Text("Disgust"),
+                    onChanged: (value) {
+                      setState(() {
+                        mood.sad.disgust = value;
+                      });
+                    },
                   ),
                   MoodSlider(
                     mood.sad.dissapointment,
                     label: const Text("Dissapointment"),
+                    onChanged: (value) {
+                      setState(() {
+                        mood.sad.dissapointment = value;
+                      });
+                    },
                   ),
                   MoodSlider(
                     mood.sad.stress,
                     label: const Text("Stress"),
+                    onChanged: (value) {
+                      setState(() {
+                        mood.sad.stress = value;
+                      });
+                    },
                   ),
-                  MoodSlider(mood.sad.worry, label: const Text("Worry")),
+                  MoodSlider(
+                    key: key,
+                    mood.sad.worry,
+                    label: const Text("Worry"),
+                    onChanged: (value) {
+                      setState(() {
+                        mood.sad.worry = value;
+                      });
+                    },
+                  ),
                   SizedBox(height: 16),
 
                   /// Notes
@@ -204,8 +271,7 @@ class _MoodTab extends State<MoodTab> with AutomaticKeepAliveClientMixin {
                                           controller,
                                           () {
                                             setState(() {
-                                              mood.notes[idx] =
-                                                  controller.text;
+                                              mood.notes[idx] = controller.text;
                                             });
                                           },
                                         );
@@ -216,9 +282,7 @@ class _MoodTab extends State<MoodTab> with AutomaticKeepAliveClientMixin {
                                     ),
                                   ],
                                 ),
-                                child: ListTile(
-                                  title: Text(mood.notes[idx]),
-                                ),
+                                child: ListTile(title: Text(mood.notes[idx])),
                                 // child: ConstrainedBox(
                                 //   constraints: BoxConstraints(minHeight: 50),
                                 //   child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [Text("Hello World")]),
