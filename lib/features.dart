@@ -1,11 +1,11 @@
 import 'dart:io';
 
 const GEMINI_ENABLED = false;
-const FIREBASE_ENABLED = false;
+const FIREBASE_ENABLED = true;
 const NOICE_ENABLED = false;
 const VIEW_LOG_AS_SHEET = true;
 const SHOW_BOTTOM_NAV = false;
-const OFFLINE = true;
+const NO_AUTH = true;
 const SLIDABLE_EXTENT = 0.5;
 const LOG_VIEW_ONLY = false;
 const PEOPLE_LIST = [];
@@ -20,8 +20,12 @@ void assertFeatures() {
     exit(1);
   }
 
-  if (OFFLINE && (FIREBASE_ENABLED || GEMINI_ENABLED)) {
-    print("Cannot run in offline mode with Firebase and Gemini");
-    exit(1);
+  if (NO_AUTH && FIREBASE_ENABLED) {
+    print("Not recommended to run NO_AUTH with FIREBASE_ENABLED");
   }
+
+  // if (OFFLINE && (FIREBASE_ENABLED || GEMINI_ENABLED)) {
+  //   print("Cannot run in offline mode with Firebase and Gemini");
+  //   exit(1);
+  // }
 }

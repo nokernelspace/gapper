@@ -81,13 +81,13 @@ class Collection {
   Directory dir;
   Collection(this.dir);
 
-  Future<void> add(Map<String, dynamic> map_to_json, String filename) async {
+  Future<void> add(Map<String, dynamic> mapToJson, String filename) async {
     final file = File('${dir.path}/${filename}');
-    if (!await file.existsSync()) {
+    if (!file.existsSync()) {
       await file.create(recursive: true);
     }
     print("Wrote to ${file.path}");
-    await file.writeAsString(jsonEncode(map_to_json));
+    await file.writeAsString(jsonEncode(mapToJson));
   }
   Future<List<Mood>> sortedList() async {
     List<Mood> out = List.empty(growable: true);

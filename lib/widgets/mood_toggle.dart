@@ -7,17 +7,19 @@ class MoodToggle extends StatefulWidget {
   const MoodToggle(this.boolean, {this.label, this.onChanged, super.key});
 
   @override
-  State<MoodToggle> createState() => _MoodToggle();
+  State<MoodToggle> createState() => _MoodToggle(this.boolean, this.onChanged);
 }
 
 class _MoodToggle extends State<MoodToggle> {
-  late bool _boolean;
+  final bool boolean;
+  final ValueChanged<bool>? onChanged;
+  _MoodToggle(this.boolean, this.onChanged);
 
-  @override
-  void initState() {
-    super.initState();
-    _boolean = widget.boolean;
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _boolean = widget.boolean;
+  // }
 
   @override
   Widget build(BuildContext ctx) {
@@ -27,13 +29,8 @@ class _MoodToggle extends State<MoodToggle> {
         widget.label ?? SizedBox.shrink(),
         SizedBox(width: 42),
         Switch(
-          value: _boolean,
-          onChanged: (value) {
-            setState(() {
-              _boolean = !_boolean;
-            });
-            widget.onChanged?.call(!_boolean);
-          },
+          value: this.boolean,
+          onChanged: this.onChanged,
         ),
       ],
     );

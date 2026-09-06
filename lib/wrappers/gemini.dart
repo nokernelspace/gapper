@@ -8,9 +8,7 @@ class Gemini {
   final client = HttpClient();
   final endpoint = Uri.parse('https://notebooks.googleapis.com');
 
-  Gemini({required this.api_key}) {
-
-  }
+  Gemini({required this.api_key});
 }
 
 Future<UserCredential> signInWithGoogle() async {

@@ -19,10 +19,10 @@ import 'package:gapper/pages/frames/setup/gemini_key.dart';
 
 Future<void> main() async {
   print("Running with Firebase Enabled :  ${FIREBASE_ENABLED}");
-  print("Running with NoIce Enabled :     ${OFFLINE}");
+  print("Running with NoIce Enabled :     ${NO_AUTH}");
   print("Running with Gemini Enabled :    ${GEMINI_ENABLED}");
 
-  print("Running in offline mode :        ${OFFLINE}");
+  print("Running in offline mode :        ${NO_AUTH}");
   assertFeatures();
 
   Filesystem.initialize();

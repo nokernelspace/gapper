@@ -8,7 +8,7 @@ import 'dart:math';
 class App extends StatefulWidget {
   final String? api_key;
 
-  App({required this.api_key});
+  const App({super.key, required this.api_key});
 
   @override
   State<App> createState() => _App();

@@ -13,7 +13,7 @@ class SetupPage extends StatefulWidget {
 
 
   static bool needs_setup() {
-    return (GEMINI_ENABLED && ShouldBeSecureKeys.GEMINI_API_KEY == null) || (!OFFLINE);
+    return (GEMINI_ENABLED && ShouldBeSecureKeys.GEMINI_API_KEY == null) || (!NO_AUTH);
   }
 }
 
@@ -35,7 +35,7 @@ class _SetupPage extends State<SetupPage>
   }
 
 
-  final ValueNotifier<bool> _loading = ValueNotifier<bool>(true);
+  final ValueNotifier<bool> _loading = ValueNotifier<bool>(false);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class _SetupPage extends State<SetupPage>
       setup_pages.add(GeminiKeyFrame());
     }
     // TODO:  && Keys.FIREBASE_TOKEN == null
-    else if (!OFFLINE) {
+    else if (!NO_AUTH) {
       total++;
       setup_pages.add(LoginFrame(_loading));
     }

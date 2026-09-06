@@ -7,17 +7,20 @@ class MoodSlider extends StatefulWidget {
   const MoodSlider(this.value, {this.label, this.onChanged, super.key});
 
   @override
-  State<MoodSlider> createState() => _MoodSlider();
+  State<MoodSlider> createState() => _MoodSlider(this.value, this.onChanged);
 }
 
 class _MoodSlider extends State<MoodSlider> {
-  late double _value;
+  final double value;
+  final ValueChanged<double>? onChanged;
+  _MoodSlider(this.value, this.onChanged);
+  // late double _value;
 
-  @override
-  void initState() {
-    super.initState();
-    _value = widget.value;
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // _value = widget.value;
+  // }
 
   @override
   Widget build(BuildContext ctx) {
@@ -25,13 +28,8 @@ class _MoodSlider extends State<MoodSlider> {
       children: [
         widget.label ?? SizedBox.shrink(),
         Slider(
-          value: _value,
-          onChanged: (value) {
-            setState(() {
-              _value = value;
-            });
-            widget.onChanged?.call(value);
-          },
+          value: this.value,
+          onChanged: this.onChanged,
         ),
       ],
     );

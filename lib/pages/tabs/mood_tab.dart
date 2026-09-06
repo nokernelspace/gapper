@@ -9,9 +9,10 @@ import 'package:gapper/features.dart';
 
 class MoodTab extends StatefulWidget {
   late _MoodTab state;
+  @override
   Key? key;
   ValueNotifier<Mood> mood;
-  MoodTab(this.key, this.mood);
+  MoodTab(this.mood, {super.key});
 
   /// State
   @override

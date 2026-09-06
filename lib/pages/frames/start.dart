@@ -29,6 +29,18 @@ class _StartPage extends State<StartPage> {
     page_controller = PageController(initialPage: current_idx);
   }
 
+  Future<void> save_current_mood() async {
+    // Could be `await`ed
+    db.collection("moods").add(mood.value.toJson());
+
+    // Add to localstore
+    await Filesystem.collection("moods").add(
+      mood.value.toJson(),
+      // Need filename because we are not a datastore. Yet (•͡˘㇁•͡˘)
+      sanitizeFilename(mood.value.time.toString()) + ".mood",
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // First 2 are default tabs, last 2 are GEMINI enabled tabs
@@ -52,7 +64,7 @@ class _StartPage extends State<StartPage> {
       }
     }();
 
-    List<Widget> tab_frames = [MoodTab(widget.key, mood)];
+    List<Widget> tab_frames = [MoodTab(mood, key: widget.key)];
     () {
       if (GEMINI_ENABLED) {
         tab_frames.add(ChatsTab());
@@ -104,34 +116,56 @@ class _StartPage extends State<StartPage> {
                 "-" +
                 now.year.toString(),
 
-                style: const TextStyle(
-                  fontSize: 21,
-                  fontWeight: FontWeight.w500
-                ),
+            style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w500),
           ),
           onPressed: () {},
         ),
         actions: [
-          IconButton(icon: Icon(Icons.add), onPressed: () {}),
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              save_current_mood();
+              setState(() {
+                mood.value = Mood();
+              });
 
-          IconButton(icon: Icon(Icons.copy), onPressed: () {}),
+              showSnackBar(context, "New");
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.copy),
+            onPressed: () {
+              save_current_mood();
+              var new_mood = Mood();
+              var _mood = mood.value;
+              new_mood.happy.confidence = _mood.happy.confidence;
+              new_mood.happy.determination = _mood.happy.determination;
+              new_mood.happy.fufillment = _mood.happy.fufillment;
+              new_mood.happy.joy = _mood.happy.joy;
+
+              new_mood.sad.disgust = _mood.sad.disgust;
+              new_mood.sad.dissapointment = _mood.sad.dissapointment;
+              new_mood.sad.stress = _mood.sad.stress;
+              new_mood.sad.worry = _mood.sad.worry;
+
+              new_mood.people = _mood.people;
+              new_mood.modes.learning = _mood.modes.learning;
+              new_mood.modes.physical = _mood.modes.physical;
+              new_mood.modes.relax = _mood.modes.relax;
+              new_mood.modes.working = _mood.modes.working;
+
+              setState(() {
+                mood.value = new_mood;
+              });
+              showSnackBar(context, "Reduplicated");
+            },
+          ),
 
           IconButton(
             icon: Icon(Icons.save),
             onPressed: () async {
-              // TODO: HACKY FIX
-              // Reading state on Press which is why we can do this
-              if (FIREBASE_ENABLED) {
-                db.collection("moods").add(mood.value.toJson());
-              } else if (OFFLINE) {
-                await Filesystem.collection("moods").add(
-                  mood.value.toJson(),
-                  // Need filename because we are not a datastore. Yet (•͡˘㇁•͡˘)
-                  sanitizeFilename(mood.value.time.toString()) + ".mood",
-                );
+              await save_current_mood();
 
-                //await Filesystem.collection("moods").sortedList();
-              }
               showSnackBar(context, "Saved!");
             },
           ),
