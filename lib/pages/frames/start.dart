@@ -8,6 +8,7 @@ import 'package:gapper/utils.dart';
 import 'package:gapper/globals.dart';
 import 'package:gapper/data/mood.dart';
 import 'package:gapper/widgets/mood_log.dart';
+import 'package:gapper/noice/lib.dart';
 
 import 'dart:async';
 
@@ -74,9 +75,10 @@ class _StartPage extends State<StartPage> {
                 builder: (context) {
                   return IconButton(
                     icon: Icon(Icons.newspaper),
-                    onPressed: () {
-                      var moods = Filesystem.collection("moods")
-                          .sortedListSync();
+                    onPressed: () async {
+                      var moods = await Filesystem.collection("moods")
+                          .sortedList();
+
                       showModalBottomSheet(
                         isScrollControlled: true,
                         showDragHandle: true,

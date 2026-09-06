@@ -42,6 +42,7 @@ class _MoodLog extends State<MoodLog> {
             return ListTile(
               key: key,
               title: Text(mood.people.name),
+              subtitle: Text(mood.time.toIso8601String()),
               onTap: () {
                 setState(() {
                   current_mood.value = mood;

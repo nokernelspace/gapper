@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gapper/pages/frames/setup.dart';
 import 'app.dart';
 
+import 'package:gapper/noice/lib.dart';
+
 import 'features.dart';   /// List of booleans for toggling features
 import 'globals.dart';    /// List of global variable. View definition for more details
 

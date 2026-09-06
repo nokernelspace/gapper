@@ -15,7 +15,7 @@ class Mood {
   Modes modes = Modes();
   Happy happy = Happy();
   Sad sad = Sad();
-  People people = People.I;
+  People people = People.ME;
 
   Mood();
   Mood.from(this.modes, this.happy, this.sad, this.people, this.notes);
@@ -42,7 +42,7 @@ class Mood {
 enum People {
   FRIENDS,
   FAMILY,
-  I;
+  ME;
 
   /// NOTE: the list
   dynamic toJson() => this.name;
