@@ -12,7 +12,7 @@ lib/
 │   └── mood_toggle.dart    Row([Text(), Switch()])
 │
 └── wrappers/          Wrappers for 3rd-Party Platforms
- └── gemini.dart         
+    └── gemini.dart         
 ```
 
 # gapper
