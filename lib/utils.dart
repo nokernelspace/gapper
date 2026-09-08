@@ -74,6 +74,9 @@ String formatDateTime(DateTime time) {
       AM = false;
       return time.hour - 12;
     }
+    else {
+      return time.hour;
+    }
   }();
   return "${time.year}-${time.month}-${time.day} ${hour}:${time.minute} ${AM ? 'AM' : 'PM'}";
 }
@@ -88,7 +91,10 @@ String formatTime(DateTime time) {
     if (time.hour > 12) {
       AM = false;
       return time.hour - 12;
+    }else {
+      return time.hour;
     }
+
   }();
   return "${hour}:${time.minute} ${AM ? 'AM' : 'PM'}";
 }

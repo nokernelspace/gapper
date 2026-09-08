@@ -89,6 +89,8 @@ class Collection {
     print("Wrote to ${file.path}");
     await file.writeAsString(jsonEncode(map_to_json));
   }
+
+  // TODO: add the ability to sort on fields (REALLY HARD for generic solution)
   Future<List<Mood>> sortedList() async {
     List<Mood> out = List.empty(growable: true);
     await for (final file in Directory('${dir.path}').list()) {
@@ -98,6 +100,10 @@ class Collection {
       }
     }
 
+
+    out.sort((a, b) {
+      return -a.time.millisecondsSinceEpoch.compareTo(b.time.millisecondsSinceEpoch);
+    });
     return out;
   }
 

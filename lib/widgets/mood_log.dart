@@ -47,6 +47,7 @@ class _MoodLog extends State<MoodLog> {
               subtitle: Text(formatTime(time)),
               trailing: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   mood.notes.length == 1 ? Text(mood.notes[0]) : Text("${mood.notes.length} Notes"),
                   Text(formatDate(time))
