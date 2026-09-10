@@ -96,5 +96,5 @@ String formatTime(DateTime time) {
     }
 
   }();
-  return "${hour}:${time.minute} ${AM ? 'AM' : 'PM'}";
+  return "${hour}:${time.minute.toString().padLeft(2, '0')} ${AM ? 'AM' : 'PM'}";
 }

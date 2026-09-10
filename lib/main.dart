@@ -44,7 +44,7 @@ Future<void> main() async {
   //   Example Below
   final settings = await SharedPreferences.getInstance();
   final String? gemini_api_key = await settings.getString("GEMINI_API_KEY");
-  ShouldBeSecureKeys.GEMINI_API_KEY = gemini_api_key;
+  // ShouldBeSecureKeys.GEMINI_API_KEY = gemini_api_key;
 
 
 

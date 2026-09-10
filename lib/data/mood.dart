@@ -8,6 +8,7 @@ typedef Bullet = String;
 
 class Mood {
   DateTime time = DateTime.now();
+  DateTime last_updated_time = DateTime.now();
   List<Bullet> notes = List.from([]);
 
   /// Equivalent to List.empty(growable: true)
